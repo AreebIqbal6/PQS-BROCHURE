@@ -1,0 +1,445 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PQS Company Profile</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --navy: #0A1E35;
+  --navy2: #122943;
+  --gold: #C8A951;
+  --gold-l: #E0C96E;
+  --gold-d: #A68A3E;
+  --cream: #FDFCF9;
+  --lgray: #F4F4F4;
+  --txt: #2C3338;
+  --txtl: #4A5568;
+}
+
+
+
+
+
+
+
+
+h1,h2,h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h4,h5 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* â”€â”€ HEADER / FOOTER BARS â”€â”€ */
+.bg-num { position: absolute; font-size: 350pt; color: rgba(200,169,81,0.08); font-family: 'Montserrat', sans-serif; font-weight: 800; top: 55%; left: 50%; transform: translate(-50%, -50%); z-index: 0; pointer-events: none; }
+.hdr {
+  background: var(--navy);
+  padding: 20px 15mm 20px 30mm;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+.hdr h2 { color: #fff; font-size: 20pt; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; }
+.hdr .pn { color: #fff; font-family: 'Montserrat', sans-serif; font-size: 14pt; font-weight: 700; }
+
+.ftr { position: absolute; bottom: 0; width: 100%; box-sizing: border-box;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--navy);
+  padding: 12px 30mm;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  z-index: 10;
+}
+.ftr .fl { color: var(--gold); font-weight: 700; }
+.ftr .fc { color: rgba(255,255,255,0.6); font-weight: 500; }
+.ftr .fr { color: var(--gold); font-weight: 700; }
+
+/* â”€â”€ UTILITIES â”€â”€ */
+.gold-line { height: 3px; background: linear-gradient(90deg, var(--gold-d), var(--gold), var(--gold-d)); flex-shrink: 0; }
+.gold-line-short { width: 60px; height: 3px; background: var(--gold); margin-bottom: 12px; }
+.image-strip { width: 100%; height: 250px; object-fit: cover; display: block; flex-shrink: 0; }
+
+/* â•â•â•â•â•â•â•â•â•â•â• PAGE 1: COVER â•â•â•â•â•â•â•â•â•â•â• */
+.loom-bg {
+}
+.cover {
+  display: block;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.cover-logo { width: 260px; margin-bottom: 25px; }
+.cover-div { width: 140px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 30px 0; }
+.cover-banner { width: 85%; max-width: 650px; margin: 15px 0; object-fit: contain; }
+.cover .sub { color: var(--gold); font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 14pt; letter-spacing: 0.25em; text-transform: uppercase; margin-top: 25px; }
+.cover .tag { color: rgba(255,255,255,0.8); font-size: 13pt; margin-top: 40px; font-weight: 500; font-family: 'Montserrat', sans-serif; letter-spacing: 0.05em; }
+.cover .btm { position: absolute; bottom: 40mm; color: var(--gold); font-size: 12pt; opacity: 0.9; font-weight: 600; font-family: 'Montserrat', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; }
+.cover .bar { position: absolute; bottom: 0; left: 0; right: 0; height: 8px; background: linear-gradient(90deg, var(--gold-d), var(--gold), var(--gold-d)); }
+
+/* â•â•â•â•â•â•â•â•â•â•â• PAGE 2: WHO WE ARE â•â•â•â•â•â•â•â•â•â•â• */
+.p2-hero { width: 100%; height: 300px; object-fit: cover; display: block; flex-shrink: 0; object-position: center 30%; }
+
+.p2-body { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; padding: 40px 30mm; position: relative; z-index: 1; }
+.p2-body .intro p { margin-bottom: 25px; font-size: 13pt; line-height: 1.7; }
+.qblock { border-left: 4px solid var(--gold); padding: 20px 25px; background: var(--cream); margin: 30px 0; }
+.qblock p { font-family: 'Montserrat', sans-serif; font-weight: 600; font-style: italic; font-size: 14pt; color: var(--navy); line-height: 1.6; }
+
+.vm-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 50px; }
+.vmbox { background: var(--lgray); padding: 25px; border-top: 3px solid var(--navy); }
+.vmbox h3 { font-size: 18pt; color: var(--navy); margin-bottom: 10px; }
+.vmbox p { font-size: 13pt; color: var(--txtl); line-height: 1.6; }
+
+/* â•â•â•â•â•â•â•â•â•â•â• PAGE 3: SERVICES â•â•â•â•â•â•â•â•â•â•â• */
+.p3-bg { z-index: 1; position: relative; background: var(--cream); flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.svc-grid { display: grid; grid-template-rows: 1fr 1fr 1fr; flex: 1; }
+.svc { padding: 20px 35mm; color: #fff; display: flex; align-items: center; gap: 30px; }
+.svc:nth-child(1) { background: var(--navy); }
+.svc:nth-child(2) { background: var(--navy2); }
+.svc:nth-child(3) { background: var(--navy); }
+.svc-content { flex: 1; }
+.svc h3 { font-size: 20pt; margin-bottom: 10px; color: var(--gold); }
+.svc .desc { font-size: 14pt; color: #fff; line-height: 1.7; margin-bottom: 15px; font-weight: 700; }
+.svc ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.svc ul li { font-size: 12.5pt; color: rgba(255,255,255,0.85); padding-left: 15px; position: relative; }
+.svc ul li::before { content: 'â– '; color: var(--gold); position: absolute; left: 0; font-size: 8pt; top: 4px; }
+
+/* â•â•â•â•â•â•â•â•â•â•â• PAGE 4: APPROACH â•â•â•â•â•â•â•â•â•â•â• */
+.p4-bg { z-index: 1; position: relative; flex: 1; display: flex; flex-direction: column; background: #fff; justify-content: center; }
+.appr-intro { text-align: center; padding: 15px 35mm 0; font-family: 'Montserrat', sans-serif; font-weight: 500; font-style: italic; color: var(--navy); font-size: 15pt; }
+
+.steps { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 10px; margin: 10px 30mm; }
+.step { padding: 12px 15px; border: 1px solid #E2E8F0; border-top: 4px solid var(--gold); background: #fff; display: block; }
+.step .num { font-family: 'Montserrat', sans-serif; font-size: 32pt; font-weight: 800; color: var(--lgray); line-height: 1; margin-bottom: 5px; }
+.step h4 { font-size: 11pt; color: var(--navy); margin-bottom: 5px; }
+.step p { font-size: 11pt; line-height: 1.5; color: var(--txtl); flex: 1; }
+
+.mbar { page-break-inside: avoid; break-inside: avoid; background: var(--navy); margin: 10px 30mm; padding: 10px 20px; display: block; align-items: center; gap: 5px; border-radius: 8px; text-align: center; }
+.mbar .ml { font-family: 'Montserrat'; font-size: 10pt; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.06em; }
+.mbar .mf { font-family: 'Montserrat', sans-serif; font-size: 11pt; font-weight: 600; color: var(--gold); }
+
+.phil-row { page-break-inside: avoid; break-inside: avoid; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 10px 30mm; }
+.phil { page-break-inside: avoid; break-inside: avoid; background: var(--navy); padding: 15px; color: #fff; border-radius: 8px; }
+.phil h4 { font-size: 13pt; color: var(--gold); margin-bottom: 8px; }
+.phil p { font-size: 9.5pt; color: rgba(255,255,255,0.85); line-height: 1.5; }
+
+/* â•â•â•â•â•â•â•â•â•â•â• PAGE 5: VALUE â•â•â•â•â•â•â•â•â•â•â• */
+.p5-bg { z-index: 1; position: relative; flex: 1; display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
+.val-hero { width: 100%; height: 280px; object-fit: cover; display: block; flex-shrink: 0; }
+
+.val-grid { page-break-inside: avoid; break-inside: avoid; display: grid; grid-template-columns: 1.1fr 0.9fr; flex: 1; }
+.val-l { padding: 30px 30px 30px 30mm; display: block; justify-content: center; background: #fff; }
+.val-l h3 { font-size: 20pt; color: var(--navy); margin-bottom: 15px; }
+.vi { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size: 13pt; }
+.vi .bul { color: var(--gold); font-size: 12pt; line-height: 1; }
+.vi strong { font-family: 'Montserrat', sans-serif; font-weight: 600; color: var(--navy); font-size: 13pt; display: block; margin-bottom: 2px; }
+.vi span { color: var(--txtl); display: block; line-height: 1.35; }
+
+.val-r { background: var(--navy); padding: 30px 30mm 30px 35px; display: block; justify-content: center; }
+.val-r h3 { font-size: 20pt; color: var(--gold); margin-bottom: 15px; }
+.wi { margin-bottom: 12px; }
+.wi h5 { font-size: 12.5pt; color: #fff; display: flex; align-items: flex-start; gap: 8px; margin-bottom: 4px; }
+.wi h5 .dm { color: var(--gold); font-size: 9pt; margin-top: 3px; }
+.wi p { font-size: 10pt; color: rgba(255,255,255,0.7); line-height: 1.6; padding-left: 20px; }
+
+/* â•â•â•â•â•â•â•â•â•â•â• PAGE 6: SERVICE MODEL â•â•â•â•â•â•â•â•â•â•â• */
+.p6-bg { z-index: 1; position: relative; flex: 1; display: flex; flex-direction: column; justify-content: center; background: #fff; padding: 10px 0; overflow: hidden; }
+.mod-grid { display: grid; gap: 10px; margin: 10px 30mm; }
+.mod { padding: 20px 25px; border-radius: 8px; }
+.mod:nth-child(even) { border-color: var(--gold); }
+.mod h4 { font-size: 12pt; margin-bottom: 8px; color: var(--navy); }
+.mod p { font-size: 13pt; line-height: 1.7; color: var(--txtl); }
+
+.serve { margin: 25px 30mm; padding: 35px 40px; background: var(--navy); color: #fff; border-radius: 12px; display: block; position: relative; }
+.serve h3 { font-size: 18pt; color: var(--gold); margin-bottom: 10px; }
+.serve .tags { line-height: 2; margin-top: 15px; margin-bottom: 25px; font-size: 13pt; color: rgba(255,255,255,0.9); }
+.serve .dot { color: rgba(255,255,255,0.3); }
+.serve h4 { font-size: 13pt; color: var(--gold); margin: 15px 0 8px; }
+.serve .aud { line-height: 2; margin-top: 10px; font-size: 12pt; color: rgba(255,255,255,0.8); }
+.serve .sep { color: rgba(255,255,255,0.3); margin: 0 6px; }
+
+.stamp-row { display: flex; align-items: center; justify-content: center; gap: 25px; margin: 10px 30mm; background: var(--lgray); padding: 15px 30px; border-radius: 12px; }
+.stamp-row img { width: 70px; height: 70px; object-fit: contain; }
+.stamp-row .future h4 { font-size: 13pt; color: var(--navy); margin-bottom: 6px; }
+.stamp-row .future p { font-size: 12.5pt; color: var(--txtl); line-height: 1.7; }
+
+/* â•â•â•â•â•â•â•â•â•â•â• PAGE 7: CONTACT â•â•â•â•â•â•â•â•â•â•â• */
+.contact-bg { background: var(--navy) !important; }
+.contact { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; flex: 1; padding: 30mm 35mm; position: relative; }
+.contact::before {
+  content: ""; position: absolute; top: 10mm; left: 10mm; right: 10mm; bottom: 10mm;
+  border: 1px solid rgba(200, 169, 81, 0.3); pointer-events: none;
+}
+.contact h2 { font-family: 'Montserrat', sans-serif; color: var(--gold); font-size: 16pt; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 20px; }
+.ci { font-family: 'Montserrat', sans-serif; font-size: 20pt; font-weight: 700; color: #fff; margin: 3px 0; line-height: 1.3; }
+.cdiv { width: 200px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 30px auto; }
+.prom { font-weight: 500; font-style: italic; font-size: 13pt; color: rgba(255,255,255,0.8); line-height: 1.6; }
+.crow { margin: 10px 0; font-size: 12pt; display: flex; justify-content: center; align-items: center; gap: 15px; }
+.crow .cl { font-family: 'Montserrat'; font-weight: 700; font-size: 10pt; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; width: 100px; text-align: right; }
+.crow .cv { color: #fff; text-align: left; width: 250px; font-size: 13pt; }
+.close-tag { font-family: 'Montserrat', sans-serif; font-weight: 700; font-style: italic; font-size: 16pt; color: #fff; margin-top: 40px; }
+.contact .bar { position: absolute; bottom: 0; left: 0; right: 0; height: 8px; background: linear-gradient(90deg, var(--gold-d), var(--gold), var(--gold-d)); }
+
+.contact .stamp-contact { width: 120px; height: 120px; object-fit: contain;  opacity: 0.9;  margin-bottom: 60px; }
+
+@page { size: A4; margin: 0; }
+html, body {
+  width: 200mm;
+  margin: 0;
+  padding: 0;
+  background: var(--cream);
+}
+.page {
+  width: 210mm;
+  height: 297mm;
+  box-sizing: border-box;
+  padding-bottom: 70px;
+  position: relative;
+  overflow: hidden;
+  page-break-after: always;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  margin: 0;
+}
+.page:last-child {
+  page-break-after: avoid;
+}
+
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: COVER -->
+<div class="page cover loom-bg">
+  <img src="file:///C%3A/Users/Noman%20Traders/OneDrive/Desktop/PQS/pqs-website/public/pqs_3letter_gold.png" class="cover-banner" alt="Precision Quality Services">
+  <img src="file:///C:/Users/Noman%20Traders/Desktop/PQS/pqs-website/public/pqs_3letter_white.png" class="cover-logo" style="width:120px; height:auto; margin:0 auto 20px; display:block;">
+  <div class="cover-div"></div>
+  <div class="sub">Company Profile</div>
+  <div class="tag">Textile Training &nbsp;Â·&nbsp; Consultancy &nbsp;Â·&nbsp; Troubleshooting</div>
+  <div class="btm">Precision. Quality. Performance.</div>
+  <div class="bar"></div>
+</div>
+
+<!-- PAGE 2: WHO WE ARE -->
+<div class="page">
+  <div class="hdr"><h2>Who We Are</h2><div style="display:flex; align-items:center; gap: 18px;"><span class="pn">01</span><img src="file:///C%3A/Users/Noman%20Traders/OneDrive/Desktop/PQS/pqs-website/public/pqs_3letter_gold.png" style="height: 20px;"></div></div>
+  <div class="gold-line"></div>
+  <div class="bg-num">01</div>
+      <div class="p2-body">
+    <div class="intro">
+      <p><strong>Precision Quality Services (PQS)</strong> is a specialized textile consultancy and training company focused on helping textile organizations improve quality, productivity, process control, and operational performance.</p>
+      <p>We combine technical knowledge with hands-on problem-solving and process improvement to help manufacturers achieve consistent quality and sustainable growth. Our work is rooted in the real challenges of the factory floor â€” not boardroom theory.</p>
+      <div class="qblock">
+        <p>"Better processes create better quality. Better quality creates satisfied customers. Satisfied customers create sustainable business growth."</p>
+      </div>
+    </div>
+    <div class="vm-row">
+      <div class="vmbox">
+        <h3>Our Vision</h3>
+        <p>To become a trusted textile industry partner recognized for delivering practical knowledge, effective solutions, and measurable improvements in quality and performance.</p>
+      </div>
+      <div class="vmbox">
+        <h3>Our Mission</h3>
+        <p>To support textile organizations through professional training, technical consultancy, and practical troubleshooting that strengthen people, processes, and product quality.</p>
+      </div>
+    </div>
+  </div>
+  <div class="ftr"><span class="fl">Precision Quality Services</span><span class="fc">Textile Training | Consultancy | Troubleshooting</span><span class="fr">02</span></div>
+</div>
+
+<!-- PAGE 3: CORE SERVICES -->
+<div class="page">
+  <div class="hdr"><h2>Our Core Services</h2><div style="display:flex; align-items:center; gap: 18px;"><span class="pn">02</span><img src="file:///C%3A/Users/Noman%20Traders/OneDrive/Desktop/PQS/pqs-website/public/pqs_3letter_gold.png" style="height: 20px;"></div></div>
+  <div class="gold-line"></div>
+  <div class="bg-num">02</div>
+    <div class="p3-bg">
+    <div class="svc-grid">
+      <div class="svc">
+        <div class="svc-content">
+          <h3>Textile Training</h3>
+          <div class="desc">Practical, industry-focused training programmes for production teams, supervisors, and quality personnel.</div>
+          <ul>
+            <li>Textile quality management</li>
+            <li>Quality control &amp; assurance</li>
+            <li>Defect identification</li>
+            <li>Root cause analysis</li>
+            <li>Process control fundamentals</li>
+            <li>Inspection &amp; testing</li>
+          </ul>
+        </div>
+      </div>
+      <div class="svc">
+        <div class="svc-content">
+          <h3>Textile Consultancy</h3>
+          <div class="desc">Helping organizations strengthen processes and build more effective, practical quality systems.</div>
+          <ul>
+            <li>Quality system improvement</li>
+            <li>Process evaluation &amp; mapping</li>
+            <li>Quality performance improvement</li>
+            <li>Defect &amp; rejection reduction</li>
+            <li>Process standardization</li>
+            <li>CAPA implementation</li>
+          </ul>
+        </div>
+      </div>
+      <div class="svc">
+        <div class="svc-content">
+          <h3>Troubleshooting</h3>
+          <div class="desc">Structured support to resolve recurring issues at the source, not just the symptoms.</div>
+          <ul>
+            <li>Problem identification</li>
+            <li>Data collection &amp; analysis</li>
+            <li>Process investigation</li>
+            <li>Defect analysis</li>
+            <li>Root cause analysis</li>
+            <li>Verification of results</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ftr"><span class="fl">Precision Quality Services</span><span class="fc">Textile Training | Consultancy | Troubleshooting</span><span class="fr">03</span></div>
+</div>
+
+<!-- PAGE 4: OUR APPROACH -->
+<div class="page">
+  <div class="hdr"><h2>Our Approach</h2><div style="display:flex; align-items:center; gap: 18px;"><span class="pn">03</span><img src="file:///C%3A/Users/Noman%20Traders/OneDrive/Desktop/PQS/pqs-website/public/pqs_3letter_gold.png" style="height: 20px;"></div></div>
+  <div class="gold-line"></div>
+  <div class="bg-num">03</div>
+    <div class="p4-bg">
+    <div class="appr-intro">A structured, practical engagement â€” from first conversation to sustained results.</div>
+    <div class="steps">
+      <div class="step"><div class="num">01</div><h4>Understand</h4><p>We map the organization's processes, objectives, and specific challenges.</p></div>
+      <div class="step"><div class="num">02</div><h4>Analyze</h4><p>We examine available data, workflows, quality issues, and contributing factors.</p></div>
+      <div class="step"><div class="num">03</div><h4>Identify</h4><p>We pinpoint root causes using systematic problem-solving techniques.</p></div>
+      <div class="step"><div class="num">04</div><h4>Improve</h4><p>We develop practical corrective and improvement actions.</p></div>
+      <div class="step"><div class="num">05</div><h4>Implement</h4><p>Where required, we support the organization during implementation.</p></div>
+      <div class="step"><div class="num">06</div><h4>Sustain</h4><p>We establish controls and practices that maintain improvement long-term.</p></div>
+    </div>
+    <div class="mbar">
+      <span class="ml">Troubleshooting Methodology:</span>
+      <span class="mf">Problem &nbsp;â†’&nbsp; Root Cause &nbsp;â†’&nbsp; Corrective Action &nbsp;â†’&nbsp; Preventive Action</span>
+    </div>
+    <div class="phil-row">
+      <div class="phil">
+        <h4>Training Philosophy</h4>
+        <p>Rather than focusing only on classroom theory, our training incorporates practical examples, real textile problems, case studies, and workplace situations â€” helping participants connect technical concepts with their day-to-day responsibilities.</p>
+      </div>
+      <div class="phil">
+        <h4>Consultancy Philosophy</h4>
+        <p>Every textile organization has different processes, people, products, and challenges. We aim to understand the actual situation, identify improvement opportunities, and develop practical solutions appropriate to each organization.</p>
+      </div>
+    </div>
+  </div>
+  <div class="ftr"><span class="fl">Precision Quality Services</span><span class="fc">Textile Training | Consultancy | Troubleshooting</span><span class="fr">04</span></div>
+</div>
+
+<!-- PAGE 5: VALUE & WHY PQS -->
+<div class="page">
+  <div class="hdr"><h2>Our Value &amp; Why PQS</h2><div style="display:flex; align-items:center; gap: 18px;"><span class="pn">04</span><img src="file:///C%3A/Users/Noman%20Traders/OneDrive/Desktop/PQS/pqs-website/public/pqs_3letter_gold.png" style="height: 20px;"></div></div>
+  <div class="gold-line"></div>
+  <div class="bg-num">04</div>
+    <div class="p5-bg">
+    <div class="val-grid">
+      <div class="val-l">
+        <h3>Our Value to Textile Organizations</h3>
+        <div class="vi"><span class="bul">â– </span><div><strong>Improved product quality</strong><span>Consistent output that meets specifications</span></div></div>
+        <div class="vi"><span class="bul">â– </span><div><strong>Reduction in defects</strong><span>Fewer rework cycles, lower waste</span></div></div>
+        <div class="vi"><span class="bul">â– </span><div><strong>Better process control</strong><span>Stability across all production stages</span></div></div>
+        <div class="vi"><span class="bul">â– </span><div><strong>Employee development</strong><span>Stronger technical capability at every level</span></div></div>
+        <div class="vi"><span class="bul">â– </span><div><strong>Root-cause identification</strong><span>Problems solved at the source</span></div></div>
+      </div>
+      <div class="val-r">
+        <h3>Why Precision Quality Services</h3>
+        <div class="wi"><h5><span class="dm">â—†</span>Practical Industry Focus</h5><p>Services designed around real textile manufacturing challenges.</p></div>
+        <div class="wi"><h5><span class="dm">â—†</span>Customized Solutions</h5><p>Training and consultancy adapted to each organization's specific needs.</p></div>
+        <div class="wi"><h5><span class="dm">â—†</span>Quality-Oriented Approach</h5><p>Focus on consistency, process control, and product quality.</p></div>
+        <div class="wi"><h5><span class="dm">â—†</span>Problem-Solving Mindset</h5><p>Technical problems addressed systematically to find underlying causes.</p></div>
+        <div class="wi"><h5><span class="dm">â—†</span>Continuous Improvement</h5><p>Sustainable gains â€” not temporary fixes.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="ftr"><span class="fl">Precision Quality Services</span><span class="fc">Textile Training | Consultancy | Troubleshooting</span><span class="fr">05</span></div>
+</div>
+
+<!-- PAGE 6: SERVICE MODEL -->
+<div class="page">
+  <div class="hdr"><h2>Our Service Model</h2><div style="display:flex; align-items:center; gap: 18px;"><span class="pn">05</span><img src="file:///C%3A/Users/Noman%20Traders/OneDrive/Desktop/PQS/pqs-website/public/pqs_3letter_gold.png" style="height: 20px;"></div></div>
+  <div class="gold-line"></div>
+  <div class="bg-num">05</div>
+    <div class="p6-bg">
+    <div class="mod-grid">
+      <div class="mod"><h4>Training Programmes</h4><p>Customized technical and quality training for employees and management.</p></div>
+      <div class="mod"><h4>Consultancy Projects</h4><p>Focused assignments addressing specific quality or process improvement needs.</p></div>
+      <div class="mod"><h4>Troubleshooting Support</h4><p>Investigating and resolving specific textile manufacturing problems.</p></div>
+      <div class="mod"><h4>Continuous Improvement</h4><p>Longer-term support for sustained quality and performance gains.</p></div>
+    </div>
+    
+    <div class="serve">
+      <h3>Who We Serve</h3>
+      <div class="tags">Spinning<span class="dot"> &nbsp;&bull;&nbsp; </span>Weaving<span class="dot"> &nbsp;&bull;&nbsp; </span>Knitting<span class="dot"> &nbsp;&bull;&nbsp; </span>Dyeing<span class="dot"> &nbsp;&bull;&nbsp; </span>Processing<span class="dot"> &nbsp;&bull;&nbsp; </span>Printing<span class="dot"> &nbsp;&bull;&nbsp; </span>Garments<span class="dot"> &nbsp;&bull;&nbsp; </span>Home Textiles<span class="dot"> &nbsp;&bull;&nbsp; </span>Textile Finishing<span class="dot"> &nbsp;&bull;&nbsp; </span>Quality &amp; Testing</div>
+      <h4>Our Target Audience</h4>
+      <div class="aud">Textile Professionals<span class="sep"> &nbsp;|&nbsp; </span>Quality Managers<span class="sep"> &nbsp;|&nbsp; </span>Quality Control Teams<span class="sep"> &nbsp;|&nbsp; </span>Production Managers<span class="sep"> &nbsp;|&nbsp; </span>Production Supervisors<span class="sep"> &nbsp;|&nbsp; </span>Technical Managers<span class="sep"> &nbsp;|&nbsp; </span>Process Engineers<span class="sep"> &nbsp;|&nbsp; </span>Inspectors<span class="sep"> &nbsp;|&nbsp; </span>Laboratory Personnel<span class="sep"> &nbsp;|&nbsp; </span>Operators<span class="sep"> &nbsp;|&nbsp; </span>Management Teams</div>
+    </div>
+    
+    <div class="stamp-row">
+      <img src="file:///C%3A/Users/Noman%20Traders/OneDrive/Desktop/PQS/pqs-website/public/pqs_3letter_gold.png" alt="PQS Seal">
+      <div class="future">
+        <h4>Future Programmes</h4>
+        <p>PQS is continuously developing new training and consultancy programmes based on industry needs and emerging challenges. Our goal is to expand our offerings while maintaining the practical, quality-focused approach that defines our work.</p>
+      </div>
+    </div>
+  </div>
+  <div class="ftr"><span class="fl">Precision Quality Services</span><span class="fc">Textile Training | Consultancy | Troubleshooting</span><span class="fr">06</span></div>
+</div>
+
+<!-- PAGE 7: CONTACT -->
+<div class="page contact-bg">
+  <div class="contact">
+    <img src="file:///C%3A/Users/Noman%20Traders/OneDrive/Desktop/PQS/pqs-website/public/pqs_3letter_gold.png" class="stamp-contact" alt="PQS Seal">
+    <h2>Our Commitment</h2>
+    <div class="ci">Improve Knowledge.</div>
+    <div class="ci">Improve Processes.</div>
+    <div class="ci">Improve Quality.</div>
+    <div class="ci">Improve Performance.</div>
+    
+    <div class="cdiv"></div>
+    <h2 style="margin-top:0; font-size: 20pt; text-transform: none; letter-spacing: normal;">Our Promise</h2>
+    <div class="prom">Precision in Knowledge. &nbsp;Quality in Processes.<br>Solutions to Problems. &nbsp;Performance through Improvement.</div>
+    <div class="cdiv"></div>
+    
+    <h2 style="margin-top:0;">Contact Us</h2>
+    <div class="contact-info">
+      <div class="crow"><span class="cl">Phone:</span><span class="cv">[Your Phone Number]</span></div>
+      <div class="crow"><span class="cl">Email:</span><span class="cv">[Your Email Address]</span></div>
+      <div class="crow"><span class="cl">Website:</span><span class="cv">[Your Website]</span></div>
+      <div class="crow"><span class="cl">Location:</span><span class="cv">[City, Country]</span></div>
+      <div class="crow"><span class="cl">LinkedIn:</span><span class="cv">[LinkedIn Profile]</span></div>
+    </div>
+    <div class="close-tag">Let's Improve Textile Quality Together.</div>
+    <div class="bar"></div>
+  </div>
+</div>
+
+</body></html>
