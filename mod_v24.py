@@ -1,11 +1,11 @@
 import fitz
 import re
 
-pdf_path = r'C:\Users\Noman Traders\Downloads\PQS_Company_Profile (1).pdf'
-banner_path = r'C:\Users\Noman Traders\OneDrive\Desktop\PQS\golden_banner.png'
-logo_3letter = r'C:\Users\Noman Traders\OneDrive\Desktop\PQS\pqs-website\public\pqs_3letter_gold.png'
-bg_path = r'C:\Users\Noman Traders\OneDrive\Desktop\PQS\contact_bg.jpg'
-out_path = r'C:\Users\Noman Traders\OneDrive\Desktop\PQS\PQS_Company_Profile_Final_v24.pdf'
+pdf_path = r'PQS_Company_Profile (1).pdf'
+banner_path = r'golden_banner.png'
+logo_3letter = r'pqs_3letter_gold.png'
+bg_path = r'contact_bg.jpg'
+out_path = r'PQS_Company_Profile_Final_v24.pdf'
 
 doc = fitz.open(pdf_path)
 
@@ -128,3 +128,4 @@ page6.insert_image(logo_rect, filename=logo_3letter)
 doc.save(out_path)
 doc.close()
 print(f"Saved {out_path}!")
+
