@@ -155,23 +155,41 @@ p1.draw_rect(fitz.Rect(0, y_bottom, W, y_bottom + 6), color=GOLD, fill=GOLD)
 p1.draw_rect(fitz.Rect(0, y_bottom + 6, W, y_bottom + 8), color=WHITE, fill=WHITE)
 
 # 5. Bottom Typography (Left Aligned, Modern)
-start_y = y_bottom + 60
+start_y = y_bottom + 65
 left_x = 50
 
-logo_size = 110
-p1.insert_image(fitz.Rect(left_x, start_y, left_x + logo_size, start_y + logo_size), filename=LOGO_GOLD, keep_proportion=True)
+# Wordmark ONLY
+wm_w = 420
+wm_h = wm_w * (50.25 / 487.5)
+wm_y = start_y
+p1.insert_image(fitz.Rect(left_x, wm_y, left_x + wm_w, wm_y + wm_h), filename=BANNER, keep_proportion=True)
 
-wm_w = 340
-wm_h = wm_w * (478.5 - 428.25) / (541.5 - 54.0)
-wm_y = start_y + (logo_size - wm_h) / 2 + 5
-p1.insert_image(fitz.Rect(left_x + logo_size + 15, wm_y, left_x + logo_size + 15 + wm_w, wm_y + wm_h), filename=BANNER, keep_proportion=True)
+# Title with Mixed Font Weights (Segoe UI)
+title_y = wm_y + wm_h + 65
+font_path_bold = r"C:\Windows\Fonts\segoeuib.ttf"
+font_path_light = r"C:\Windows\Fonts\segoeuil.ttf"
+font_path_reg = r"C:\Windows\Fonts\segoeui.ttf"
 
-title_y = start_y + logo_size + 70
-p1.insert_text(fitz.Point(left_x, title_y), "COMPANY PROFILE", fontname="hebo", fontsize=38, color=WHITE)
+fs = 42
+title1 = "COMPANY"
+title2 = "PROFILE"
 
-p1.draw_rect(fitz.Rect(left_x, title_y + 18, left_x + 60, title_y + 21), color=GOLD, fill=GOLD)
-tag_text = "Textile Training  -  Consultancy  -  Troubleshooting"
-p1.insert_text(fitz.Point(left_x, title_y + 48), tag_text, fontname="helv", fontsize=13, color=LIGHT_GRAY)
+try:
+    font_light = fitz.Font(fontfile=font_path_light)
+    w1 = font_light.text_length("COMPANY", fontsize=fs) + 16
+    p1.insert_text(fitz.Point(left_x, title_y), title1, fontfile=font_path_light, fontsize=fs, color=WHITE)
+    p1.insert_text(fitz.Point(left_x + w1, title_y), title2, fontfile=font_path_bold, fontsize=fs, color=WHITE)
+except Exception as e:
+    print(e)
+    p1.insert_text(fitz.Point(left_x, title_y), title1 + title2, fontname="hebo", fontsize=fs, color=WHITE)
+
+# Tagline
+p1.draw_rect(fitz.Rect(left_x, title_y + 18, left_x + 90, title_y + 20), color=GOLD, fill=GOLD)
+tag_text = "Textile Training   |   Consultancy   |   Troubleshooting"
+try:
+    p1.insert_text(fitz.Point(left_x, title_y + 50), tag_text, fontfile=font_path_reg, fontsize=14, color=LIGHT_GRAY)
+except:
+    p1.insert_text(fitz.Point(left_x, title_y + 50), tag_text, fontname="helv", fontsize=14, color=LIGHT_GRAY)
 
 # PAGE 2 — WHO WE ARE / MISSION / VISION / TRAINING
 # ═════════════════════════════════════════════════════════════════════════════
@@ -398,5 +416,6 @@ p3.draw_rect(fitz.Rect(margin, margin, W - margin, H - margin), color=GOLD, widt
 doc.save(OUT_PATH)
 doc.close()
 print(f"Saved {OUT_PATH}")
+
 
 
