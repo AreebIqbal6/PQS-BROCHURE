@@ -24,7 +24,7 @@ IMG_EMBROIDERY = os.path.join(IMG_DIR, "embroidery.jpg")
 IMG_LAB        = os.path.join(IMG_DIR, "lab_inspector.jpg")
 IMG_MACHINES   = os.path.join(IMG_DIR, "machines.jpg")
 
-OUT_PATH   = os.path.join(BASE, "PQS_Brochure_Final_v7.pdf")
+OUT_PATH   = os.path.join(BASE, "PQS_Brochure_Final_v8.pdf")
 
 # ─── COLORS ──────────────────────────────────────────────────────────────────
 NAVY       = (10/255, 30/255, 53/255)
@@ -113,10 +113,10 @@ def add_footer(page, page_num, banner_path, is_dark=True):
 p1 = doc.new_page(width=W, height=H)
 
 # 1. Background for the bottom half (Textured Navy)
-p1.insert_image(p1.rect, filename=CONTACT_BG, keep_proportion=False)
+p1.insert_image(p1.rect, filename=IMG_MACHINES, keep_proportion=False)
 shape = p1.new_shape()
 shape.draw_rect(p1.rect)
-shape.finish(color=NAVY, fill=NAVY, fill_opacity=0.92)
+shape.finish(color=NAVY, fill=NAVY, fill_opacity=0.82)
 shape.commit()
 
 # 2. Top 5-Image Mosaic Grid (y=0 to 500)
@@ -290,10 +290,10 @@ add_footer(p2, 2, BANNER, is_dark=False)
 p3 = doc.new_page(width=W, height=H)
 
 # Full bleed background with Navy overlay
-p3.insert_image(p3.rect, filename=CONTACT_BG, keep_proportion=False)
+p3.insert_image(p3.rect, filename=IMG_THREADS, keep_proportion=False)
 shape = p3.new_shape()
 shape.draw_rect(p3.rect)
-shape.finish(color=NAVY, fill=NAVY, fill_opacity=0.92)
+shape.finish(color=NAVY, fill=NAVY, fill_opacity=0.85)
 shape.commit()
 
 # Logo
@@ -381,6 +381,10 @@ closing = "Let's Improve Textile Quality Together."
 cw = font_italic.text_length(closing, fontsize=14)
 p3.insert_text(fitz.Point((W - cw)/2, cy), closing, fontname="heit", fontsize=14, color=WHITE)
 
+
+
+# Gold Border
+p3.draw_rect(fitz.Rect(margin, margin, W - margin, H - margin), color=GOLD, width=1.5)
 
 doc.save(OUT_PATH)
 doc.close()
