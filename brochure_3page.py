@@ -24,7 +24,7 @@ IMG_EMBROIDERY = os.path.join(IMG_DIR, "embroidery.jpg")
 IMG_LAB        = os.path.join(IMG_DIR, "lab_inspector.jpg")
 IMG_MACHINES   = os.path.join(IMG_DIR, "machines.jpg")
 
-OUT_PATH   = os.path.join(BASE, "PQS_Brochure_Final_v6.pdf")
+OUT_PATH   = os.path.join(BASE, "PQS_Brochure_Final_v7.pdf")
 
 # ─── COLORS ──────────────────────────────────────────────────────────────────
 NAVY       = (10/255, 30/255, 53/255)
@@ -289,17 +289,26 @@ add_footer(p2, 2, BANNER, is_dark=False)
 # ═════════════════════════════════════════════════════════════════════════════
 p3 = doc.new_page(width=W, height=H)
 
+# Full bleed background with Navy overlay
 p3.insert_image(p3.rect, filename=CONTACT_BG, keep_proportion=False)
+shape = p3.new_shape()
+shape.draw_rect(p3.rect)
+shape.finish(color=NAVY, fill=NAVY, fill_opacity=0.92)
+shape.commit()
 
-logo_rect = fitz.Rect((W-110)/2, 60, (W+110)/2, 170)
-p3.insert_image(logo_rect, filename=LOGO_GOLD, keep_proportion=True)
+# Logo
+logo_size = 110
+p3.insert_image(fitz.Rect((W-logo_size)/2, 80, (W+logo_size)/2, 80 + logo_size), filename=LOGO_GOLD, keep_proportion=True)
 
-commit_text = "O U R   C O M M I T M E N T"
-font_h = fitz.Font("hebo")
-commit_w = font_h.text_length(commit_text, fontsize=18)
-p3.insert_text(fitz.Point((W - commit_w)/2, 220), commit_text, fontname="hebo", fontsize=18, color=WHITE)
-
-p3.draw_rect(fitz.Rect((W-80)/2, 235, (W+80)/2, 237), color=GOLD, fill=GOLD)
+# OUR COMMITMENT
+cy = 250
+commit_title = "OUR COMMITMENT"
+font_title = fitz.Font("hebo")
+ct_w = font_title.text_length(commit_title, fontsize=18)
+p3.insert_text(fitz.Point((W - ct_w)/2, cy), commit_title, fontname="hebo", fontsize=18, color=WHITE)
+cy += 15
+p3.draw_rect(fitz.Rect((W-40)/2, cy, (W+40)/2, cy + 2), color=GOLD, fill=GOLD)
+cy += 45
 
 commit_lines = [
     "Improve Knowledge.",
@@ -307,77 +316,74 @@ commit_lines = [
     "Improve Quality.",
     "Improve Performance.",
 ]
-cy = 275
+font_body = fitz.Font("helv")
 for line in commit_lines:
-    lw = font_h.text_length(line, fontsize=15)
-    p3.insert_text(fitz.Point((W - lw)/2, cy), line, fontname="hebo", fontsize=15, color=WHITE)
-    cy += 28
+    lw = font_body.text_length(line, fontsize=14)
+    p3.insert_text(fitz.Point((W - lw)/2, cy), line, fontname="helv", fontsize=14, color=WHITE)
+    cy += 26
 
-cy += 15
-promise_title = "Our Promise"
-pt_w = font_h.text_length(promise_title, fontsize=14)
-p3.insert_text(fitz.Point((W - pt_w)/2, cy), promise_title, fontname="hebo", fontsize=14, color=GOLD)
-cy += 10
-p3.draw_rect(fitz.Rect((W-40)/2, cy, (W+40)/2, cy + 1.5), color=GOLD, fill=GOLD)
-cy += 20
+cy += 35
+promise_title = "OUR PROMISE"
+pt_w = font_title.text_length(promise_title, fontsize=11)
+p3.insert_text(fitz.Point((W - pt_w)/2, cy), promise_title, fontname="hebo", fontsize=11, color=GOLD)
+cy += 18
 
 promise_lines = [
-    "Precision in Knowledge.  Quality in Processes.",
-    "Solutions to Problems.  Performance through Improvement.",
+    "Precision in Knowledge. Quality in Processes.",
+    "Solutions to Problems. Performance through Improvement."
 ]
-font_promise = fitz.Font("helv")
+font_italic = fitz.Font("heit")
 for line in promise_lines:
-    lw = font_promise.text_length(line, fontsize=11)
-    p3.insert_text(fitz.Point((W - lw)/2, cy), line, fontname="helv", fontsize=11, color=LIGHT_GRAY)
+    lw = font_italic.text_length(line, fontsize=11)
+    p3.insert_text(fitz.Point((W - lw)/2, cy), line, fontname="heit", fontsize=11, color=LIGHT_GRAY)
     cy += 20
 
-cy += 40
-contact_title = "C O N T A C T   U S"
-ct_w = font_h.text_length(contact_title, fontsize=16)
-p3.insert_text(fitz.Point((W - ct_w)/2, cy), contact_title, fontname="hebo", fontsize=16, color=WHITE)
-cy += 8
-p3.draw_rect(fitz.Rect((W-60)/2, cy, (W+60)/2, cy + 1.5), color=GOLD, fill=GOLD)
+cy += 50
+p3.draw_rect(fitz.Rect((W-100)/2, cy, (W+100)/2, cy + 1), color=GOLD, fill=GOLD)
+cy += 45
+
+contact_title = "CONTACT US"
+ct_w = font_title.text_length(contact_title, fontsize=15)
+p3.insert_text(fitz.Point((W - ct_w)/2, cy), contact_title, fontname="hebo", fontsize=15, color=WHITE)
 cy += 35
 
+# Contact Grid: Left aligned in the center
 contact_items = [
-    ("PHONE:", "03322673373", "tel:+923322673373"),
-    ("EMAIL:", "precisionqualityserviveslabs@gmail.com", "mailto:precisionqualityserviveslabs@gmail.com"),
-    ("WEBSITE:", "precisionqualityservices.vercel.app", "https://precisionqualityservices.vercel.app"),
-    ("LOCATION:", "R-332/9, Dastagir, F.B Area, Karachi, 75950", None),
-    ("LINKEDIN:", "linkedin.com/company/pqs-precision-quality-services", "https://www.linkedin.com/company/pqs-precision-quality-services"),
+    ("PHONE", "03322673373", "tel:+923322673373"),
+    ("EMAIL", "precisionqualityserviveslabs@gmail.com", "mailto:precisionqualityserviveslabs@gmail.com"),
+    ("WEBSITE", "precisionqualityservices.vercel.app", "https://precisionqualityservices.vercel.app"),
+    ("LOCATION", "R-332/9, Dastagir, F.B Area, Karachi, 75950", None),
+    ("LINKEDIN", "linkedin.com/company/pqs-precision-quality-services", "https://www.linkedin.com/company/pqs-precision-quality-services"),
 ]
+
+max_label_w = 0
+for label, _, _ in contact_items:
+    lw = font_title.text_length(label, fontsize=10)
+    if lw > max_label_w:
+        max_label_w = lw
+
+grid_x = W / 2 - 160  
 for label, value, uri in contact_items:
-    lw = font_h.text_length(label, fontsize=10)
-    vw = font_promise.text_length(value, fontsize=10)
+    p3.insert_text(fitz.Point(grid_x, cy), label, fontname="hebo", fontsize=10, color=GOLD)
     
-    # Label in Gold Bold
-    lx = (W/2) - lw - 30
-    p3.insert_text(fitz.Point(lx, cy), label, fontname="hebo", fontsize=10, color=GOLD)
+    val_x = grid_x + max_label_w + 30
+    vw = font_body.text_length(value, fontsize=10.5)
+    p3.insert_text(fitz.Point(val_x, cy), value, fontname="helv", fontsize=10.5, color=WHITE)
     
-    # Value in Light Gray
-    vx = (W/2) - 10
-    p3.insert_text(fitz.Point(vx, cy), value, fontname="helv", fontsize=10, color=LIGHT_GRAY)
-    
-    # Make clickable
     if uri:
-        # Define clickable rect
-        val_rect = fitz.Rect(vx, cy - 10, vx + vw, cy + 2)
+        val_rect = fitz.Rect(val_x, cy - 10.5, val_x + vw, cy + 2)
         p3.insert_link({"kind": fitz.LINK_URI, "from": val_rect, "uri": uri})
         
-    cy += 24
+    cy += 26
 
-cy += 30
+cy += 50
 closing = "Let's Improve Textile Quality Together."
-cw = font_h.text_length(closing, fontsize=13)
-p3.insert_text(fitz.Point((W - cw)/2, cy), closing, fontname="heit", fontsize=13, color=WHITE)
+cw = font_italic.text_length(closing, fontsize=14)
+p3.insert_text(fitz.Point((W - cw)/2, cy), closing, fontname="heit", fontsize=14, color=WHITE)
 
-# Page 3 Gold Border (kept for elegance on dark bg)
-margin = 15
-p3.draw_rect(fitz.Rect(margin, margin, W - margin, H - margin), color=GOLD, width=1)
 
 doc.save(OUT_PATH)
 doc.close()
 print(f"Saved {OUT_PATH}")
-
 
 
