@@ -24,7 +24,7 @@ IMG_EMBROIDERY = os.path.join(IMG_DIR, "embroidery.jpg")
 IMG_LAB        = os.path.join(IMG_DIR, "lab_inspector.jpg")
 IMG_MACHINES   = os.path.join(IMG_DIR, "machines.jpg")
 
-OUT_PATH   = os.path.join(BASE, "PQS_Brochure_Final_v8.pdf")
+OUT_PATH   = os.path.join(BASE, "PQS_Brochure_Final_v10.pdf")
 
 # ─── COLORS ──────────────────────────────────────────────────────────────────
 NAVY       = (10/255, 30/255, 53/255)
@@ -107,13 +107,22 @@ def add_footer(page, page_num, banner_path, is_dark=True):
     )
 
 
+def get_cropped_bg(img_path, rect):
+    target_ratio = rect.width / rect.height
+    temp_path = img_path + "_bg.jpg"
+    cropped = crop_image_to_ratio(img_path, target_ratio, inset=0)
+    if cropped.mode == "RGBA":
+        cropped = cropped.convert("RGB")
+    cropped.save(temp_path, quality=95)
+    return temp_path
+
 # ═════════════════════════════════════════════════════════════════════════════
 #  PAGE 1 — COVER (Ultra-Premium Mosaic Bleed + V24 Dark Theme)
 # ═════════════════════════════════════════════════════════════════════════════
 p1 = doc.new_page(width=W, height=H)
 
 # 1. Background for the bottom half (Textured Navy)
-p1.insert_image(p1.rect, filename=IMG_MACHINES, keep_proportion=False)
+p1.insert_image(p1.rect, filename=get_cropped_bg(IMG_MACHINES, p1.rect), keep_proportion=False)
 shape = p1.new_shape()
 shape.draw_rect(p1.rect)
 shape.finish(color=NAVY, fill=NAVY, fill_opacity=0.82)
@@ -290,7 +299,7 @@ add_footer(p2, 2, BANNER, is_dark=False)
 p3 = doc.new_page(width=W, height=H)
 
 # Full bleed background with Navy overlay
-p3.insert_image(p3.rect, filename=IMG_THREADS, keep_proportion=False)
+p3.insert_image(p3.rect, filename=get_cropped_bg(IMG_THREADS, p3.rect), keep_proportion=False)
 shape = p3.new_shape()
 shape.draw_rect(p3.rect)
 shape.finish(color=NAVY, fill=NAVY, fill_opacity=0.85)
