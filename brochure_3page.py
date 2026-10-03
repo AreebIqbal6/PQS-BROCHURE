@@ -353,18 +353,18 @@ contact_items = [
     ("EMAIL:", "precisionqualityserviveslabs@gmail.com", "mailto:precisionqualityserviveslabs@gmail.com"),
     ("WEBSITE:", "precisionqualityservices.vercel.app", "https://precisionqualityservices.vercel.app"),
     ("LOCATION:", "R-332/9, Dastagir, F.B Area, Karachi, 75950", None),
-    ("LINKEDIN:", "https://www.linkedin.com/company/pqs-precision-quality-services", "https://www.linkedin.com/company/pqs-precision-quality-services"),
+    ("LINKEDIN:", "linkedin.com/company/pqs-precision-quality-services", "https://www.linkedin.com/company/pqs-precision-quality-services"),
 ]
 for label, value, uri in contact_items:
     lw = font_h.text_length(label, fontsize=10)
     vw = font_promise.text_length(value, fontsize=10)
     
     # Label in Gold Bold
-    lx = (W/2) - lw - 10
+    lx = (W/2) - lw - 30
     p3.insert_text(fitz.Point(lx, cy), label, fontname="hebo", fontsize=10, color=GOLD)
     
     # Value in Light Gray
-    vx = (W/2) + 10
+    vx = (W/2) - 10
     p3.insert_text(fitz.Point(vx, cy), value, fontname="helv", fontsize=10, color=LIGHT_GRAY)
     
     # Make clickable
@@ -384,5 +384,6 @@ draw_gold_border(p3)
 doc.save(OUT_PATH)
 doc.close()
 print(f"Saved {OUT_PATH}")
+
 
 
