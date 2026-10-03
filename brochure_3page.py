@@ -24,7 +24,7 @@ IMG_EMBROIDERY = os.path.join(IMG_DIR, "embroidery.jpg")
 IMG_LAB        = os.path.join(IMG_DIR, "lab_inspector.jpg")
 IMG_MACHINES   = os.path.join(IMG_DIR, "machines.jpg")
 
-OUT_PATH   = os.path.join(BASE, "PQS_Brochure_3Page.pdf")
+OUT_PATH   = os.path.join(BASE, "PQS_Brochure_Final_v4.pdf")
 
 # ─── COLORS ──────────────────────────────────────────────────────────────────
 NAVY       = (10/255, 30/255, 53/255)
@@ -108,39 +108,54 @@ def add_footer(page, page_num, banner_path, is_dark=True):
 
 
 # ═════════════════════════════════════════════════════════════════════════════
-#  PAGE 1 — COVER (Modern Corporate Bleed Layout)
+#  PAGE 1 — COVER (Dynamic Collage + Left-Aligned Modern Typography)
 # ═════════════════════════════════════════════════════════════════════════════
 p1 = doc.new_page(width=W, height=H)
-p1.draw_rect(p1.rect, color=WHITE, fill=WHITE)
 
-# Top Hero Image (Edge to Edge)
-hero_h = 480
-hero_rect = fitz.Rect(0, 0, W, hero_h)
-insert_framed_image(p1, hero_rect, IMG_LAB, border_width=0)
+# Low opacity background overlay
+p1.insert_image(p1.rect, filename=CONTACT_BG, keep_proportion=False)
+shape = p1.new_shape()
+shape.draw_rect(p1.rect)
+shape.finish(color=NAVY, fill=NAVY, fill_opacity=0.88)
+shape.commit()
 
-# Accent Bars
-p1.draw_rect(fitz.Rect(0, hero_h, W, hero_h + 12), color=NAVY, fill=NAVY)
-p1.draw_rect(fitz.Rect(0, hero_h + 12, W, hero_h + 16), color=GOLD, fill=GOLD)
+# Dynamic overlapping collage (with gold boundaries)
+rect_tl = fitz.Rect(40, 50, 270, 210)
+rect_tr = fitz.Rect(330, 40, 560, 190)
+rect_bl = fitz.Rect(50, 250, 250, 410)
+rect_br = fitz.Rect(340, 240, 550, 390)
+rect_main = fitz.Rect(180, 130, 410, 330) # Center piece
 
-# Bottom Content (Left Aligned, Modern)
-logo_y = hero_h + 60
-logo_size = 90
-p1.insert_image(fitz.Rect(50, logo_y, 50 + logo_size, logo_y + logo_size), filename=LOGO_GOLD, keep_proportion=True)
+insert_framed_image(p1, rect_tl, IMG_MACHINES, 2)
+insert_framed_image(p1, rect_tr, IMG_THREADS, 2)
+insert_framed_image(p1, rect_bl, IMG_COTTON, 2)
+insert_framed_image(p1, rect_br, IMG_EMBROIDERY, 2)
+insert_framed_image(p1, rect_main, IMG_LAB, 3)
 
-wm_w = 300
+# Modern, Left-Aligned Typography
+start_y = 520
+left_x = 50
+
+# Logo
+logo_size = 120
+p1.insert_image(fitz.Rect(left_x, start_y, left_x + logo_size, start_y + logo_size), filename=LOGO_GOLD, keep_proportion=True)
+
+# Wordmark
+wm_y = start_y + logo_size + 15
+wm_w = 340
 wm_h = wm_w * (478.5 - 428.25) / (541.5 - 54.0)
-p1.insert_image(fitz.Rect(160, logo_y + 15, 160 + wm_w, logo_y + 15 + wm_h), filename=BANNER, keep_proportion=True)
+p1.insert_image(fitz.Rect(left_x, wm_y, left_x + wm_w, wm_y + wm_h), filename=BANNER, keep_proportion=True)
 
 # Title
-title_y = logo_y + logo_size + 60
-p1.insert_text(fitz.Point(50, title_y), "COMPANY PROFILE", fontname="hebo", fontsize=34, color=NAVY)
+title_y = wm_y + wm_h + 50
+p1.insert_text(fitz.Point(left_x, title_y), "COMPANY PROFILE", fontname="hebo", fontsize=32, color=WHITE)
 
 # Tagline
-p1.draw_rect(fitz.Rect(50, title_y + 15, 120, title_y + 17), color=GOLD, fill=GOLD)
+p1.draw_rect(fitz.Rect(left_x, title_y + 15, left_x + 80, title_y + 18), color=GOLD, fill=GOLD)
 tag_text = "Textile Training  •  Consultancy  •  Troubleshooting"
-p1.insert_text(fitz.Point(50, title_y + 40), tag_text, fontname="helv", fontsize=12, color=DARK_GRAY)
+p1.insert_text(fitz.Point(left_x, title_y + 45), tag_text, fontname="helv", fontsize=13, color=GOLD)
 
-
+# No footer on Cover
 # ═════════════════════════════════════════════════════════════════════════════
 #  PAGE 2 — WHO WE ARE / MISSION / VISION / TRAINING
 # ═════════════════════════════════════════════════════════════════════════════
@@ -356,3 +371,4 @@ p3.draw_rect(fitz.Rect(margin, margin, W - margin, H - margin), color=GOLD, widt
 doc.save(OUT_PATH)
 doc.close()
 print(f"Saved {OUT_PATH}")
+
