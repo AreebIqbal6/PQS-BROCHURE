@@ -24,7 +24,7 @@ IMG_EMBROIDERY = os.path.join(IMG_DIR, "embroidery.jpg")
 IMG_LAB        = os.path.join(IMG_DIR, "lab_inspector.jpg")
 IMG_MACHINES   = os.path.join(IMG_DIR, "machines.jpg")
 
-OUT_PATH   = os.path.join(BASE, "PQS_Brochure_Final_v4.pdf")
+OUT_PATH   = os.path.join(BASE, "PQS_Brochure_Final_v5.pdf")
 
 # ─── COLORS ──────────────────────────────────────────────────────────────────
 NAVY       = (10/255, 30/255, 53/255)
@@ -169,9 +169,9 @@ p2.insert_text(fitz.Point(W - 60, 35), "02", fontname="hebo", fontsize=14, color
 
 # Background (Offwhite + Large Stamp Watermark entering from Left)
 p2.draw_rect(fitz.Rect(0, header_h, W, H - 57), color=OFFWHITE, fill=OFFWHITE)
-stamp_w = 600
-stamp_x = -250  # Entering from left
-stamp_y = 150
+stamp_w = 900
+stamp_x = -300  # Entering from left
+stamp_y = 100
 p2.insert_image(fitz.Rect(stamp_x, stamp_y, stamp_x + stamp_w, stamp_y + stamp_w), filename=STAMP_WM, keep_proportion=True)
 
 # Who We Are Text (Left side) with BOLD inline text
@@ -371,4 +371,5 @@ p3.draw_rect(fitz.Rect(margin, margin, W - margin, H - margin), color=GOLD, widt
 doc.save(OUT_PATH)
 doc.close()
 print(f"Saved {OUT_PATH}")
+
 
