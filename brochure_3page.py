@@ -128,6 +128,9 @@ shape.draw_rect(p1.rect)
 shape.finish(color=NAVY, fill=NAVY, fill_opacity=0.82)
 shape.commit()
 
+
+
+
 # 2. Top 5-Image Mosaic Grid (y=0 to 500)
 y_split = 220
 y_bottom = 500
@@ -145,6 +148,8 @@ insert_framed_image(p1, r4, IMG_LAB, 0)
 insert_framed_image(p1, r5, IMG_EMBROIDERY, 0)
 
 # 3. Gold Seams (4px width)
+
+
 p1.draw_line(fitz.Point(280, 0), fitz.Point(280, y_split), color=GOLD, width=4)
 p1.draw_line(fitz.Point(170, y_split), fitz.Point(170, y_bottom), color=GOLD, width=4)
 p1.draw_line(fitz.Point(420, y_split), fitz.Point(420, y_bottom), color=GOLD, width=4)
@@ -177,9 +182,11 @@ title2 = "PROFILE"
 try:
     font_light = fitz.Font(fontfile=font_path_light)
     w1 = font_light.text_length("COMPANY", fontsize=fs) + 16
-    p1.insert_text(fitz.Point(left_x, title_y), title1, fontfile=font_path_light, fontsize=fs, color=WHITE)
-    p1.insert_text(fitz.Point(left_x + w1, title_y), title2, fontfile=font_path_bold, fontsize=fs, color=WHITE)
+    p1.insert_text(fitz.Point(left_x, title_y), title1, fontname="segoe_l", fontfile=font_path_light, fontsize=fs, color=WHITE)
+    p1.insert_text(fitz.Point(left_x + w1, title_y), title2, fontname="segoe_b", fontfile=font_path_bold, fontsize=fs, color=WHITE)
 except Exception as e:
+    print('FALLBACK TRIGGERED')
+    print(e)
     print(e)
     p1.insert_text(fitz.Point(left_x, title_y), title1 + title2, fontname="hebo", fontsize=fs, color=WHITE)
 
@@ -187,7 +194,7 @@ except Exception as e:
 p1.draw_rect(fitz.Rect(left_x, title_y + 18, left_x + 90, title_y + 20), color=GOLD, fill=GOLD)
 tag_text = "Textile Training   |   Consultancy   |   Troubleshooting"
 try:
-    p1.insert_text(fitz.Point(left_x, title_y + 50), tag_text, fontfile=font_path_reg, fontsize=14, color=LIGHT_GRAY)
+    p1.insert_text(fitz.Point(left_x, title_y + 50), tag_text, fontname="segoe_r", fontfile=font_path_reg, fontsize=14, color=LIGHT_GRAY)
 except:
     p1.insert_text(fitz.Point(left_x, title_y + 50), tag_text, fontname="helv", fontsize=14, color=LIGHT_GRAY)
 
@@ -323,6 +330,9 @@ shape.draw_rect(p3.rect)
 shape.finish(color=NAVY, fill=NAVY, fill_opacity=0.85)
 shape.commit()
 
+
+
+
 # Logo
 logo_size = 110
 p3.insert_image(fitz.Rect((W-logo_size)/2, 80, (W+logo_size)/2, 80 + logo_size), filename=LOGO_GOLD, keep_proportion=True)
@@ -411,11 +421,20 @@ p3.insert_text(fitz.Point((W - cw)/2, cy), closing, fontname="heit", fontsize=14
 
 
 # Gold Border
-p3.draw_rect(fitz.Rect(margin, margin, W - margin, H - margin), color=GOLD, width=1.5)
+
 
 doc.save(OUT_PATH)
 doc.close()
 print(f"Saved {OUT_PATH}")
+
+
+
+
+
+
+
+
+
 
 
 
