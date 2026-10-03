@@ -23,7 +23,7 @@ IMG_EMBROIDERY = os.path.join(IMG_DIR, "embroidery.jpg")
 IMG_LAB        = os.path.join(IMG_DIR, "lab_inspector.jpg")
 IMG_MACHINES   = os.path.join(IMG_DIR, "machines.jpg")
 
-OUT_PATH   = os.path.join(BASE, "PQS_Brochure_3Page.pdf")
+OUT_PATH   = os.path.join(BASE, "PQS_Brochure_Final.pdf")
 
 # ─── COLORS ──────────────────────────────────────────────────────────────────
 NAVY       = (10/255, 30/255, 53/255)
@@ -84,6 +84,10 @@ def insert_rich_text(page, rect, segments, fontsize, leading):
                 page.insert_text(fitz.Point(cx, cy), token, fontname=fontname, fontsize=fontsize, color=color)
                 cx += token_w
     return cy
+
+def draw_gold_border(page, margin=18, width=2.0):
+    rect = fitz.Rect(margin, margin, W - margin, H - margin)
+    page.draw_rect(rect, color=GOLD, width=width)
 
 def add_footer(page, page_num, banner_path, is_dark=True):
     bg_color = NAVY if is_dark else OFFWHITE
@@ -160,6 +164,7 @@ tag_w = font_cp.text_length(tag_text, fontsize=9)
 p1.insert_text(fitz.Point((W - tag_w) / 2, dash_top + 50), tag_text, fontname="helv", fontsize=9, color=LIGHT_GRAY)
 
 add_footer(p1, 1, BANNER, is_dark=True)
+draw_gold_border(p1)
 
 
 # ═════════════════════════════════════════════════════════════════════════════
@@ -375,6 +380,9 @@ closing = "Let's Improve Textile Quality Together."
 cw = font_h.text_length(closing, fontsize=13)
 p3.insert_text(fitz.Point((W - cw)/2, cy), closing, fontname="heit", fontsize=13, color=WHITE)
 
+draw_gold_border(p3)
 doc.save(OUT_PATH)
 doc.close()
 print(f"Saved {OUT_PATH}")
+
+
