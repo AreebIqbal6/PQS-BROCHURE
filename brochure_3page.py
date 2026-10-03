@@ -1,5 +1,6 @@
 """
 PQS Company Profile — 3-Page Premium Brochure
+Modern Corporate Design
 """
 
 import fitz  # PyMuPDF
@@ -15,7 +16,7 @@ ASSETS     = os.path.join(BASE, "pqs-website", "public")
 LOGO_GOLD  = os.path.join(ASSETS, "pqs_3letter_gold.png")
 BANNER     = os.path.join(BASE, "golden_banner.png")
 CONTACT_BG = os.path.join(BASE, "contact_bg.jpg")
-STAMP      = os.path.join(ASSETS, "stamp.png")
+STAMP_WM   = os.path.join(BASE, "stamp_watermark.png")
 
 IMG_THREADS    = os.path.join(IMG_DIR, "threads.jpg")
 IMG_COTTON     = os.path.join(IMG_DIR, "cotton.jpg")
@@ -23,7 +24,7 @@ IMG_EMBROIDERY = os.path.join(IMG_DIR, "embroidery.jpg")
 IMG_LAB        = os.path.join(IMG_DIR, "lab_inspector.jpg")
 IMG_MACHINES   = os.path.join(IMG_DIR, "machines.jpg")
 
-OUT_PATH   = os.path.join(BASE, "PQS_Brochure_Final.pdf")
+OUT_PATH   = os.path.join(BASE, "PQS_Brochure_3Page.pdf")
 
 # ─── COLORS ──────────────────────────────────────────────────────────────────
 NAVY       = (10/255, 30/255, 53/255)
@@ -38,10 +39,13 @@ W, H = 595.28, 841.89
 
 doc = fitz.open()
 
-def crop_image_to_ratio(img_path, target_ratio):
+def crop_image_to_ratio(img_path, target_ratio, inset=15):
     img = Image.open(img_path)
+    # Crop inward to remove any AI-generated grey borders
+    img = img.crop((inset, inset, img.width - inset, img.height - inset))
     img_w, img_h = img.size
     img_ratio = img_w / img_h
+    
     if img_ratio > target_ratio:
         new_w = int(img_h * target_ratio)
         left = (img_w - new_w) / 2
@@ -61,7 +65,8 @@ def insert_framed_image(page, rect, img_path, border_width=2.0):
     cropped.save(temp_path, quality=95)
     
     page.insert_image(rect, filename=temp_path, keep_proportion=False)
-    page.draw_rect(rect, color=GOLD, width=border_width)
+    if border_width > 0:
+        page.draw_rect(rect, color=GOLD, width=border_width)
 
 def insert_rich_text(page, rect, segments, fontsize, leading):
     x0, y0, x1, y1 = rect
@@ -85,10 +90,6 @@ def insert_rich_text(page, rect, segments, fontsize, leading):
                 cx += token_w
     return cy
 
-def draw_gold_border(page, margin=18, width=2.0):
-    rect = fitz.Rect(margin, margin, W - margin, H - margin)
-    page.draw_rect(rect, color=GOLD, width=width)
-
 def add_footer(page, page_num, banner_path, is_dark=True):
     bg_color = NAVY if is_dark else OFFWHITE
     text_color = LIGHT_GRAY if is_dark else DARK_GRAY
@@ -107,64 +108,37 @@ def add_footer(page, page_num, banner_path, is_dark=True):
 
 
 # ═════════════════════════════════════════════════════════════════════════════
-#  PAGE 1 — COVER
+#  PAGE 1 — COVER (Modern Corporate Bleed Layout)
 # ═════════════════════════════════════════════════════════════════════════════
 p1 = doc.new_page(width=W, height=H)
+p1.draw_rect(p1.rect, color=WHITE, fill=WHITE)
 
-# Low opacity background overlay
-p1.insert_image(p1.rect, filename=CONTACT_BG)
-shape = p1.new_shape()
-shape.draw_rect(p1.rect)
-shape.finish(color=NAVY, fill=NAVY, fill_opacity=0.88)
-shape.commit()
+# Top Hero Image (Edge to Edge)
+hero_h = 480
+hero_rect = fitz.Rect(0, 0, W, hero_h)
+insert_framed_image(p1, hero_rect, IMG_LAB, border_width=0)
 
-# Dynamic overlapping collage (with gold boundaries)
-rect_tl = fitz.Rect(40, 70, 270, 230)
-rect_tr = fitz.Rect(330, 60, 560, 210)
-rect_bl = fitz.Rect(50, 270, 250, 430)
-rect_br = fitz.Rect(340, 260, 550, 410)
-rect_main = fitz.Rect(180, 150, 410, 350) # Center piece
+# Accent Bars
+p1.draw_rect(fitz.Rect(0, hero_h, W, hero_h + 12), color=NAVY, fill=NAVY)
+p1.draw_rect(fitz.Rect(0, hero_h + 12, W, hero_h + 16), color=GOLD, fill=GOLD)
 
-insert_framed_image(p1, rect_tl, IMG_MACHINES, 2)
-insert_framed_image(p1, rect_tr, IMG_THREADS, 2)
-insert_framed_image(p1, rect_bl, IMG_COTTON, 2)
-insert_framed_image(p1, rect_br, IMG_EMBROIDERY, 2)
-insert_framed_image(p1, rect_main, IMG_LAB, 3) # Thicker border for center image
+# Bottom Content (Left Aligned, Modern)
+logo_y = hero_h + 60
+logo_size = 90
+p1.insert_image(fitz.Rect(50, logo_y, 50 + logo_size, logo_y + logo_size), filename=LOGO_GOLD, keep_proportion=True)
 
-# Gold line separator
-p1.draw_rect(fitz.Rect(100, 480, W - 100, 481.5), color=GOLD, fill=GOLD)
-
-# Logo
-logo_top = 510
-logo_size = 140
-logo_x = (W - logo_size) / 2
-p1.insert_image(fitz.Rect(logo_x, logo_top, logo_x + logo_size, logo_top + logo_size),
-                filename=LOGO_GOLD, keep_proportion=True)
-
-# Wordmark
-wm_top = logo_top + logo_size + 15
-wm_w = 420
+wm_w = 300
 wm_h = wm_w * (478.5 - 428.25) / (541.5 - 54.0)
-wm_x = (W - wm_w) / 2
-p1.insert_image(fitz.Rect(wm_x, wm_top, wm_x + wm_w, wm_top + wm_h),
-                filename=BANNER, keep_proportion=True)
+p1.insert_image(fitz.Rect(160, logo_y + 15, 160 + wm_w, logo_y + 15 + wm_h), filename=BANNER, keep_proportion=True)
 
-# Gold dash
-dash_top = wm_top + wm_h + 15
-dash_w = 60
-p1.draw_rect(fitz.Rect((W-dash_w)/2, dash_top, (W+dash_w)/2, dash_top + 2), color=GOLD, fill=GOLD)
+# Title
+title_y = logo_y + logo_size + 60
+p1.insert_text(fitz.Point(50, title_y), "COMPANY PROFILE", fontname="hebo", fontsize=34, color=NAVY)
 
-cp_text = "C O M P A N Y   P R O F I L E"
-font_cp = fitz.Font("helv")
-cp_w = font_cp.text_length(cp_text, fontsize=11)
-p1.insert_text(fitz.Point((W - cp_w) / 2, dash_top + 30), cp_text, fontname="helv", fontsize=11, color=WHITE)
-
-tag_text = "Textile Training  ·  Consultancy  ·  Troubleshooting"
-tag_w = font_cp.text_length(tag_text, fontsize=9)
-p1.insert_text(fitz.Point((W - tag_w) / 2, dash_top + 50), tag_text, fontname="helv", fontsize=9, color=LIGHT_GRAY)
-
-add_footer(p1, 1, BANNER, is_dark=True)
-draw_gold_border(p1)
+# Tagline
+p1.draw_rect(fitz.Rect(50, title_y + 15, 120, title_y + 17), color=GOLD, fill=GOLD)
+tag_text = "Textile Training  •  Consultancy  •  Troubleshooting"
+p1.insert_text(fitz.Point(50, title_y + 40), tag_text, fontname="helv", fontsize=12, color=DARK_GRAY)
 
 
 # ═════════════════════════════════════════════════════════════════════════════
@@ -178,22 +152,17 @@ p2.draw_rect(fitz.Rect(0, 0, W, header_h), color=NAVY, fill=NAVY)
 p2.insert_text(fitz.Point(40, 35), "WHO WE ARE", fontname="hebo", fontsize=18, color=WHITE)
 p2.insert_text(fitz.Point(W - 60, 35), "02", fontname="hebo", fontsize=14, color=GOLD)
 
-# Background (Offwhite + Stamp Watermark)
+# Background (Offwhite + Large Stamp Watermark entering from Left)
 p2.draw_rect(fitz.Rect(0, header_h, W, H - 57), color=OFFWHITE, fill=OFFWHITE)
-stamp_w = 400
-stamp_x = (W - stamp_w) / 2
-p2.insert_image(fitz.Rect(stamp_x, 200, stamp_x + stamp_w, 200 + stamp_w), filename=STAMP, keep_proportion=True)
-
-# Overlay to fade the stamp
-shape = p2.new_shape()
-shape.draw_rect(fitz.Rect(0, header_h, W, H - 57))
-shape.finish(color=OFFWHITE, fill=OFFWHITE, fill_opacity=0.88)
-shape.commit()
+stamp_w = 600
+stamp_x = -250  # Entering from left
+stamp_y = 150
+p2.insert_image(fitz.Rect(stamp_x, stamp_y, stamp_x + stamp_w, stamp_y + stamp_w), filename=STAMP_WM, keep_proportion=True)
 
 # Who We Are Text (Left side) with BOLD inline text
-body_y = header_h + 35
+body_y = header_h + 40
 margin = 40
-text_w = W - 2*margin - 180 # Leave room for image on right
+text_w = W - 2*margin - 200 # Leave room for image on right
 rich_segments = [
     ("PRECISION QUALITY SERVICES ", "hebo", NAVY),
     ("(PQS) is a specialized textile consultancy and training company focused on helping textile organizations improve quality, productivity, process control, and operational performance.", "helv", DARK_GRAY)
@@ -206,8 +175,8 @@ rich_segments2 = [
 end_y = insert_rich_text(p2, fitz.Rect(margin, end_y1 + 8, margin + text_w, end_y1 + 200), rich_segments2, 10.5, 16)
 
 # Image on the right of Who We Are
-img_right_rect = fitz.Rect(margin + text_w + 20, body_y, W - margin, end_y)
-insert_framed_image(p2, img_right_rect, IMG_LAB, 2)
+img_right_rect = fitz.Rect(margin + text_w + 30, body_y, W - margin, end_y)
+insert_framed_image(p2, img_right_rect, IMG_MACHINES, 2)
 
 quote_y = end_y + 25
 quote = (
@@ -380,10 +349,10 @@ closing = "Let's Improve Textile Quality Together."
 cw = font_h.text_length(closing, fontsize=13)
 p3.insert_text(fitz.Point((W - cw)/2, cy), closing, fontname="heit", fontsize=13, color=WHITE)
 
-draw_gold_border(p3)
+# Page 3 Gold Border (kept for elegance on dark bg)
+margin = 15
+p3.draw_rect(fitz.Rect(margin, margin, W - margin, H - margin), color=GOLD, width=1)
+
 doc.save(OUT_PATH)
 doc.close()
 print(f"Saved {OUT_PATH}")
-
-
-
